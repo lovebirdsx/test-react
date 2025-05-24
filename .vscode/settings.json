@@ -1,0 +1,4 @@
+{
+  // The following setting is added to solve the issue where tests cannot be debugged. See <https://github.com/vitest-dev/vscode/issues/548#issuecomment-2749211666> for reference.
+  "vitest.shellType": "terminal",
+}
