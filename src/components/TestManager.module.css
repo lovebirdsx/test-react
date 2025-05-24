@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.nav {
+    width: 300px;
+    overflow-y: auto;
+    border-right: 1px solid var(--color-border);
+    padding: 0.5rem 0.5rem 0.5rem 0.25rem;
+    background: var(--color-nav-bg);
+}
+
+.main {
+    flex: 1;
+    padding: 1rem;
+    background: var(--color-bg);
+}
+
+.fileNode {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin: 1px 0;
+    font-weight: 400;
+    color: #d4d4d4;
+    background: none;
+    transition: background 0.15s;
+}
+
+.fileNodeSelected {
+    background: #2a2d2e;
+    color: #fff;
+    font-weight: 600;
+}
+
+.fileNodeHover {
+    background: #23272b;
+}
+
+.folderNode {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    color: #c5c5c5;
+    padding: 2px 0;
+}
+
+.folderChildren {
+    padding-left: 12px;
+}
