@@ -1,5 +1,6 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import styles from './TestManager.module.css';
+import usePersistentState from '../hooks/usePersistentState';
 
 // Dynamically import all test components under tests/ with React.lazy
 const testModules = import.meta.glob('./tests/**/*.ct.tsx');
@@ -51,8 +52,9 @@ function buildTree(paths: string[]): TreeNode[] {
 
 export const TestManager: React.FC = () => {
     const [tree, setTree] = useState<TreeNode[]>([]);
-    const [selected, setSelected] = useState<string | null>(null);
-    const [openFolders, setOpenFolders] = useState<Set<string>>(new Set());
+    const [selected, setSelected] = usePersistentState<string | null>('TestManager.selected', null);
+    const [openFoldersArr, setOpenFoldersArr] = usePersistentState<string[]>('TestManager.openFolders', []);
+    const openFolders = useMemo(() => new Set(openFoldersArr), [openFoldersArr]);
 
     useEffect(() => {
         const paths = Object.keys(testModules).map(p => p.replace(/^\.\/tests\//, ''));
@@ -64,15 +66,13 @@ export const TestManager: React.FC = () => {
     };
 
     const handleToggleFolder = (path: string) => {
-        setOpenFolders(prev => {
-            const next = new Set(prev);
-            if (next.has(path)) {
-                next.delete(path);
-            } else {
-                next.add(path);
-            }
-            return next;
-        });
+        const isOpen = openFolders.has(path);
+        if (isOpen) {
+            openFolders.delete(path);
+        } else {
+            openFolders.add(path);
+        }
+        setOpenFoldersArr(Array.from(openFolders));
     };
 
     const renderTree = (nodes: TreeNode[], level = 0): React.ReactNode => (
