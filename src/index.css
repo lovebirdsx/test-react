@@ -1,4 +1,4 @@
-/* 全局变量 & 主题设置 */
+/* theme */
 :root {
   --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   --font-size-base: 14px;
@@ -48,18 +48,19 @@ button {
   font-family: inherit;
   font-size: 1em;
   font-weight: 500;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 0.6em 1.2em;
-  background-color: var(--color-btn-bg);
+  border: none;
+  border-radius: 2px;
+  padding: 0.4em 1em;
+  background-color: #0E639C;
+  color: #FFFFFF;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.2s;
 }
 button:hover {
-  border-color: var(--color-link);
+  background-color: #0A4E7A;
 }
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 1px solid #FFFFFF;
 }
 
 /* color scheme */

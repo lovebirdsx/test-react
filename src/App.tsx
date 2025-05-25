@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import { AppContext, defalutAppConfig, type SetConfig } from './app/context';
 import { TestManager } from './components/TestManager'
 
@@ -16,7 +16,9 @@ function App() {
 
   return (
     <AppContext.Provider value={{ config: appConfig, setConfig: handleSetConfig }}>
-      <TestManager />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TestManager />
+      </Suspense>
     </AppContext.Provider>
   )
 }

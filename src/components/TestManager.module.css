@@ -8,6 +8,7 @@
     font-size: var(--font-size-base);
     background: var(--color-bg);
     color: var(--color-text);
+    overflow: hidden;
 }
 
 .nav {
@@ -22,6 +23,7 @@
     flex: 1;
     padding: 1rem;
     background: var(--color-bg);
+    overflow: auto;
 }
 
 .fileNode {
