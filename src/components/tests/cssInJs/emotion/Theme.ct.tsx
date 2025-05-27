@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from '@emotion/styled';
+import { ThemeProvider } from '@emotion/react';
 
 // 定义主题类型
 interface ThemeType {
@@ -124,9 +125,9 @@ const darkTheme: ThemeType = {
     },
 };
 
-// 扩展 DefaultTheme
-declare module 'styled-components' {
-    interface DefaultTheme extends ThemeType {}
+// 扩展 Emotion Theme
+declare module '@emotion/react' {
+    export interface Theme extends ThemeType {}
 }
 
 // 通用容器
