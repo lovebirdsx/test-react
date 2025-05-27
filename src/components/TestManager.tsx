@@ -50,6 +50,24 @@ function buildTree(paths: string[]): TreeNode[] {
     return traverse(root);
 }
 
+// 递归获取所有叶子节点（测试文件）的路径
+function getAllTestPaths(nodes: TreeNode[]): string[] {
+    const paths: string[] = [];
+    
+    function traverse(nodes: TreeNode[]) {
+        nodes.forEach(node => {
+            if (node.children) {
+                traverse(node.children);
+            } else {
+                paths.push(node.path);
+            }
+        });
+    }
+    
+    traverse(nodes);
+    return paths;
+}
+
 export const TestManager: React.FC = () => {
     const [tree, setTree] = useState<TreeNode[]>([]);
     const [selected, setSelected] = usePersistentState<string | null>('TestManager.selected', null);
@@ -58,8 +76,18 @@ export const TestManager: React.FC = () => {
 
     useEffect(() => {
         const paths = Object.keys(testModules).map(p => p.replace(/^\.\/tests\//, ''));
-        setTree(buildTree(paths));
-    }, []);
+        const builtTree = buildTree(paths);
+        setTree(builtTree);
+
+        // 检查当前选中的文件是否存在，如果不存在则选择第一个测试文件
+        const availablePaths = getAllTestPaths(builtTree);
+        
+        if (!selected || !availablePaths.includes(selected)) {
+            if (availablePaths.length > 0) {
+                setSelected(availablePaths[0]);
+            }
+        }
+    }, [selected, setSelected]);
 
     const handleSelect = (path: string) => {
         setSelected(path);
@@ -106,12 +134,14 @@ export const TestManager: React.FC = () => {
         <div className={styles.container}>
             <nav className={styles.nav}>{renderTree(tree)}</nav>
             <main className={styles.main}>
-                {selected ? (
+                {selected && LazyComponents[selected] ? (
                     <Suspense fallback={<div>Loading test...</div>}>
                         {React.createElement(LazyComponents[selected]!)}
                     </Suspense>
                 ) : (
-                    <p style={{ color: '#888' }}>Select a test to run</p>
+                    <p style={{ color: '#888' }}>
+                        {tree.length === 0 ? 'No tests found' : 'Select a test to run'}
+                    </p>
                 )}
             </main>
         </div>
