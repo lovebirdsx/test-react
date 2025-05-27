@@ -108,14 +108,14 @@ export const TestManager: React.FC = () => {
             {nodes.map(node =>
                 node.children ? (
                     <div key={node.path}>
-                        <div className={styles.folderNode} onClick={() => handleToggleFolder(node.path)}>
+                        <button className={styles.folderNode} onClick={() => handleToggleFolder(node.path)}>
                             <span style={{ marginRight: 2 }}>{openFolders.has(node.path) ? '▼' : '►'}</span>
                             📁 {node.name}
-                        </div>
+                        </button>
                         {openFolders.has(node.path) && renderTree(node.children, level + 1)}
                     </div>
                 ) : (
-                    <div
+                    <button
                         key={node.path}
                         className={
                             styles.fileNode +
@@ -124,7 +124,7 @@ export const TestManager: React.FC = () => {
                         onClick={() => handleSelect(node.path)}
                     >
                         📄 {node.name}
-                    </div>
+                    </button>
                 )
             )}
         </div>
